@@ -117,6 +117,65 @@ Quando removemos um container, a imagem que foi utilizada para a sua criação p
 * PARA VER MEMÓRIA USADA/ESPAÇO USADO PELO CONTAINER:
 > `docker container stats [id do container]`
 
+* PARA VER MEMÓRIA DE TODOS OS CONTAINERS:
+> `docker container stats` (sem colocar nenhum id específico)
+
+vai imprimir as informações assim como essas:
+
+CONTAINER ID   NAME              CPU %     MEM USAGE / LIMIT     MEM %     NET I/O     BLOCK I/O   PIDS
+646eee53c713   confident_gould   0.00%     9.484MiB / 15.56GiB   0.06%     836B / 0B   0B / 0B     9
+
+
+* MOSTRAR OS PROCESSOS QUE ESTÃO SENDO EXECUTADOS NO CONTAINER:
+> `docker container top [id do container]`
+
+assim como:
+
+UID                 PID                 PPID                C                   STIME               TTY                 TIME                CMD
+root                1318                1297                0                   22:05               ?                   00:00:00            nginx: master process nginx -g daemon off;
+uuidd               1379                1318                0                   22:05               ?                   00:00:00            nginx: worker process
+uuidd               1380                1318                0                   22:05               ?                   00:00:00            nginx: worker process
+uuidd               1381                1318                0                   22:05               ?                   00:00:00            nginx: worker process
+
+
+* PARA LIMITAR A MEMÓRIA QUE O CONTAINER VAI UTILIZAR (MEMÓRIA MÁXIMA) NO MOMENTO DA CRIAÇÃO DO CONTAINER:
+> `docker container run -d -m 128M nginx` (-m é de memory, 128M é a quantidade da memória e o nginx é o exemplo do tipo do container a ser criado)
+
+* PARA VER A MEMÓRIA CONFIGURADA NO CONTAINER:
+> `docker container inspect  [id do container] | grep -i mem`
+
+* PARA LIMITAR A CPU (O CORE DA CPU, DE 0 A 1, sendo 1 = 100% da cpu):
+> `docker container run -d -m 128M --cpus 0.5 nginx`
+(quando rodar o inspect, olhar no item NanoCpus que é lá que estará essa especificação)
+
+* PARA ALTERAR A MEMÓRIA OU CPUS DE UM CONTAINER QUE JÁ EXISTE:
+> `docker container update -m 256m --cpus=1 [id do container]`
+
+* PARA VER OS LOGS DE UM CONTAINER:
+> `docker container logs  [id do container]`
+
+Para exibir os logs de forma dinâmica, ou seja, conforme aparecem novas mensagens ele atualiza a saída no terminal utilizamos a opção "-f".
+
+> `docker container logs -f  [id do container]`
+
+
+* LISTAR AS IMAGENS:
+> `docker image ls`
+ou 
+> `docker images`
+
+o retorno do comando acima:
+
+REPOSITORY: O nome da imagem.
+TAG: A versão da imagem.
+IMAGE ID: Identificação da imagem.
+CREATED: Quando ela foi criada.
+SIZE: Tamanho da imagem.
+
+* REMOVER AS IMAGENS (mais de uma imagem de uma vez só):
+> `docker rmi  [id da imagem 1]  [id da outra imagem]`
+
+
 
 
 
